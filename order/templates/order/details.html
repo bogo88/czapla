@@ -1,0 +1,20 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{{order.name}}</h1>
+        <h4>Order time: {{order.order_time}}</h4>
+    </div>
+    {% if items.count > 0 %}
+        <h3>Items for order {{order.name}}</h3>
+        <div class="list-group">
+        {% for item in items %}
+            <p class="list-group-item">{{item.meal.name}} ordered by <a>{{item.user}}</a> <span>{{item.meal.price}}zł</span></p>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No items in this order yet</p>
+    {% endif %}
+
+    <a href="{% url 'meal:select' order.id %}" class="btn btn-primary">Order meal <i class="fa fa-sign-in"></i></a>
+{% endblock %}

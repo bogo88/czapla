@@ -1,0 +1,32 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    {% if restaurants.count > 0 %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <h3>Select restaurant</h3>
+        <div class="list-group">
+        {% for restaurant in restaurants %}
+            <p class="list-group-item restaurant"><input type="radio" value="1" id="{{restaurant.id}}" name="restaurant[{{restaurant.id}}]"/><label for="{{restaurant.id}}">{{restaurant}}</label></p>
+            <p style="display:none" class="list-group-item order-time">
+                Select order time:
+                <input type="text" name="date[{{restaurant.id}}]">
+                <input type="text" name="time[{{restaurant.id}}]">
+            </p>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No restaurants yet</p>
+    </form>
+    {% endif %}
+        <script>
+            $(document).ready(function(){
+                $('.restaurant').on('click',function(){
+                    $(this).find('input').attr('selected');
+                    $('.order-time').hide();
+                    $(this).next().show();
+                });
+            });
+        </script>
+
+{% endblock %}

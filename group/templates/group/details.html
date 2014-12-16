@@ -1,0 +1,22 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{{group.name}}</h1>
+    </div>
+
+    {% if orders.count > 0 %}
+        <h3>Orders for group {{group.name}}</h3>
+        <div class="list-group">
+        {% for order in orders %}
+            <a href="{% url 'order:details' order.id %}" class="list-group-item">{{order.name}}</a>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No orders in this group yet</p>
+    {% endif %}
+    <div>
+        <a href="{% url 'order:index' %}" class="btn btn-primary" >Your groups</a>
+    </div>
+
+{% endblock %}
