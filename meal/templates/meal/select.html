@@ -8,14 +8,16 @@
     </div>
 
     {% if meals.count > 0 %}
-        <h3>Meals for restaurant {{order.restaurant}}</h3>
+        <h3>Dania restauracji {{order.restaurant}}</h3>
         <div class="list-group">
         {% for meal in meals %}
             <a href="{% url 'item:add' order_id=order.id meal_id=meal.id %}" class="list-group-item">{{meal}}</a>
         {% endfor %}
         </div>
     {% else %}
-        <p>No meals in this restaurant yet</p>
+        <p>Nie ma jeszcze żadnych dań w tej restauracji</p>
     {% endif %}
-
+    <div>
+        <a href="{% url 'order:details' order.id %}" class="btn btn-primary" >Wstecz</a>
+    </div>
 {% endblock %}

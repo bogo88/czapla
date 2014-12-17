@@ -2,40 +2,48 @@
 
 {% block title %}
     {% if user.is_authenticated %}
-        Welcome {{user.username}}.
+       Witaj {{user.username}}.
     {% else %}
-        Welcome. Please log in.
+        Witaj. Zaloguj się, aby złożyć zamówienie
     {% endif %}
 {% endblock %}
 
 {% block content %}
     {% if user.is_authenticated %}
         <div class="page-header">
-          <h1>Welcome {{user.username}}</h1>
+          <h1>Witaj {{user.username}}</h1>
         </div>
-        <div>
-            <a href="{% url 'group:index' %}" class="btn btn-primary" >Your groups</a>
-        </div>
+
+        {% if user.groups.all.count > 0 %}
+            <h3>Twoje grupy</h3>
+            <div class="list-group">
+            {% for group in user.groups.all %}
+                <a href="{% url 'group:details' group.id %}" class="list-group-item">{{group.name}}</a>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Nie należysz jeszcze do żadnej grupy</p>
+        {% endif %}
 
     {% else %}
         <form method="POST">
         {% csrf_token %}
         <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">Nazwa użytkownika</label>
             {{form.username}}
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">Hasło</label>
             {{form.password}}
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Sign in <i class="fa fa-sign-in"></i></button>
+            <button type="submit" class="btn btn-primary">Zaloguj się <i class="fa fa-sign-in"></i></button>
         </div>
         </form>
 
         <div class="panel panel-default">
           <div class="panel-body">
-            You don't have account? <a href="">Sign up here!</a>
+            Nie masz jeszcze konta? <a href="{% url 'profile:register' %}">Zarejestruj się!</a>
           </div>
         </div>
     {% endif %}

@@ -2,21 +2,44 @@
 
 {% block content %}
     {% if restaurants.count > 0 %}
-    <form method="POST" action="">
+    <form method="POST" action="{% url 'order:add' %}">
         {% csrf_token %}
-        <h3>Select restaurant</h3>
+        <input type="hidden" value="{{group_id}}" name="group"/>
+        <h3>Nazwa zamówienia</h3>
+        <p class="list-group-item">
+            <input type="text" name="name" placeholder="Nazwa zamówienia" required=""/>
+        </p>
+        <h3>Wybierz czas zamówienia</h3>
+        <p class="list-group-item restaurant">
+            <label for="date">Data</label><input placeholder="Data zamówienia" type="text" id="date" class="datepicker" name="date" required=""/> <i class="fa fa-calendar"></i><br/>
+            <label>Godzina</label>
+                <select name="hours" required="">
+                    <option value=''>--</option>
+                    <option value='00'>00</option>
+                    {% for h in hours %}
+                        <option value={{h}}> {{h}}</option>
+                    {% endfor %}
+                </select>
+                <select name="minutes" required="">
+                    <option value=''>--</option>
+                    <option value='00'>00</option>
+                    {% for m in minutes %}
+                        <option value={{m}}> {{m}}</option>
+                    {% endfor %}
+                </select>
+        </p>
+        <h3>Wybierz restaurację</h3>
         <div class="list-group">
         {% for restaurant in restaurants %}
-            <p class="list-group-item restaurant"><input type="radio" value="1" id="{{restaurant.id}}" name="restaurant[{{restaurant.id}}]"/><label for="{{restaurant.id}}">{{restaurant}}</label></p>
-            <p style="display:none" class="list-group-item order-time">
-                Select order time:
-                <input type="text" name="date[{{restaurant.id}}]">
-                <input type="text" name="time[{{restaurant.id}}]">
-            </p>
+            <p class="list-group-item restaurant"><input type="radio" value="{{restaurant.id}}" id="{{restaurant.id}}" name="restaurant" required=""/><label for="{{restaurant.id}}">{{restaurant}}</label></p>
         {% endfor %}
+
+        <div>
+            <input type="submit" class="btn btn-primary" value="Utwórz zamówienie" />
+        </div>
         </div>
     {% else %}
-        <p>No restaurants yet</p>
+        <p>Nie ma jeszcze żadnych restauracji</p>
     </form>
     {% endif %}
         <script>
@@ -26,6 +49,37 @@
                     $('.order-time').hide();
                     $(this).next().show();
                 });
+
+                $( '.fa-calendar').on('click',function(){
+
+                    $('.datepicker' ).datepicker({
+                        showOn: 'focus',
+                        showButtonPanel: true,
+                        dateFormat: 'dd-mm-yy'
+                    });
+                    $('.datepicker' ).focus();
+                });
+
+                 $.datepicker._gotoToday = function(id) {
+                    var target = $(id);
+                    var inst = this._getInst(target[0]);
+                    if (this._get(inst, 'gotoCurrent') && inst.currentDay) {
+                            inst.selectedDay = inst.currentDay;
+                            inst.drawMonth = inst.selectedMonth = inst.currentMonth;
+                            inst.drawYear = inst.selectedYear = inst.currentYear;
+                    }
+                    else {
+                            var date = new Date();
+                            inst.selectedDay = date.getDate();
+                            inst.drawMonth = inst.selectedMonth = date.getMonth();
+                            inst.drawYear = inst.selectedYear = date.getFullYear();
+                            // the below two lines are new
+                            this._setDateDatepicker(target, date);
+                            this._selectDate(id, this._getDateDatepicker(target));
+                    }
+                    this._notifyChange(inst);
+                    this._adjustDate(target);
+                }
             });
         </script>
 

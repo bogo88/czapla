@@ -3,18 +3,22 @@
 {% block content %}
     <div class="page-header">
         <h1>{{order.name}}</h1>
-        <h4>Order time: {{order.order_time}}</h4>
+        <h4>Czas zamówienia: {{order.order_time}}</h4>
     </div>
     {% if items.count > 0 %}
-        <h3>Items for order {{order.name}}</h3>
+        <h3>Lista zamawiających</h3>
         <div class="list-group">
         {% for item in items %}
-            <p class="list-group-item">{{item.meal.name}} ordered by <a>{{item.user}}</a> <span>{{item.meal.price}}zł</span></p>
+            <p class="list-group-item">{{item.meal.name}} zamówione przez <a>{{item.user}}</a> <span>{{item.meal.price}}zł</span></p>
         {% endfor %}
         </div>
     {% else %}
-        <p>No items in this order yet</p>
+        <p>Nie ma jeszcze zamówień dla tej listy</p>
     {% endif %}
 
-    <a href="{% url 'meal:select' order.id %}" class="btn btn-primary">Order meal <i class="fa fa-sign-in"></i></a>
+    <a href="{% url 'meal:select' order.id %}" class="btn btn-primary">Dopisz się <i class="fa fa-sign-in"></i></a>
+
+    <div>
+        <a href="{% url 'group:details' order.group.id %}" class="btn btn-primary" >Wstecz</a>
+    </div>
 {% endblock %}

@@ -6,17 +6,21 @@
     </div>
 
     {% if orders.count > 0 %}
-        <h3>Orders for group {{group.name}}</h3>
+        <h3>Zamówienia grupy {{group.name}}</h3>
         <div class="list-group">
         {% for order in orders %}
             <a href="{% url 'order:details' order.id %}" class="list-group-item">{{order.name}}</a>
         {% endfor %}
         </div>
     {% else %}
-        <p>No orders in this group yet</p>
+        <p>Nie ma jeszcze żadnych zamówień</p>
     {% endif %}
     <div>
-        <a href="{% url 'order:index' %}" class="btn btn-primary" >Your groups</a>
+        <a href="{% url 'meal:restaurant' group.id %}" class="btn btn-primary" >Nowe zamówienie</a>
     </div>
+    <div>
+        <a href="{% url 'profile:index' %}" class="btn btn-primary" >Wstecz</a>
+    </div>
+
 
 {% endblock %}

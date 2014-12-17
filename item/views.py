@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -15,12 +16,12 @@ def add(request, order_id, meal_id):
     user = get_object_or_404(User, pk=request.user.id)
     item = Item()
     if not request.user.groups.filter(id=order.group.id):
-        messages.warning(request, 'This order don\'t belong to your group')
-        return redirect('group:index')
+        messages.warning(request, 'To zamówienie nie należy do Twojej grupy')
+        return redirect('profile:index')
     else:
         item.order = order
         item.meal = meal
         item.user = user
         item.save()
-        messages.success(request, 'Meal added to list')
+        messages.success(request, 'Dodano do listy')
         return HttpResponseRedirect(reverse('order:details', args=[order.id]))

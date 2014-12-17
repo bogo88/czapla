@@ -5,7 +5,11 @@
   <h1>Co zamawiamy?</h1>
   <p>Zamawisz coś? Daj znać - inni też zamawiają!</p>
   <p>
-    <a href="{% url 'profile:index' %}" class="btn btn-primary btn-lg" role="button">Zaloguj się <i class="fa fa-sign-in"></i></a>
+  {% if user.is_authenticated %}
+    <a href="{% url 'profile:index' %}" class="btn btn-primary btn-lg" role="button">Zamów obiad <i class="fa fa-sign-in"></i></a>
+  {% else %}
+    <a href="{% url 'profile:index' %}" class="btn btn-primary btn-lg" role="button">Zaloguj się<i class="fa fa-sign-in"></i></a>
+  {% endif %}
   </p>
 </div>
 {% endblock %}
