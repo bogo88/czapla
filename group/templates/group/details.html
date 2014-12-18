@@ -9,18 +9,24 @@
         <h3>Zamówienia grupy {{group.name}}</h3>
         <div class="list-group">
         {% for order in orders %}
-            <a href="{% url 'order:details' order.id %}" class="list-group-item">{{order.name}}</a>
+            <a href="{% url 'order:details' order.id %}" class="list-group-item">
+                {% if order.order_time|date:"d-m-Y" == now|date:"d-m-Y" %}
+                    <span class="label label-success">Dzisiaj {{order.order_time|date:"H:i"}}</span>
+                {% else %}
+                    <span class="label label-info">{{order.order_time|date:"d-m-Y H:i"}}</span>
+                {% endif %}
+                {{order.name}}</a>
         {% endfor %}
         </div>
     {% else %}
-        <p>Nie ma jeszcze żadnych zamówień</p>
+        <div class="alert alert-warning" role="alert">Nie ma jeszcze żadnych zamówień</div>
     {% endif %}
-    <div>
+    <p>
         <a href="{% url 'meal:restaurant' group.id %}" class="btn btn-primary" >Nowe zamówienie</a>
-    </div>
-    <div>
-        <a href="{% url 'profile:index' %}" class="btn btn-primary" >Wstecz</a>
-    </div>
+    </p>
+    <p>
+        <a href="{% url 'profile:index' %}" class="btn btn-info" >Wstecz</a>
+    </p>
 
 
 {% endblock %}

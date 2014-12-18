@@ -15,9 +15,9 @@
         {% endfor %}
         </div>
     {% else %}
-        <p>Nie ma jeszcze żadnych dań w tej restauracji</p>
+        <div class="alert alert-warning" role="alert">Nie ma jeszcze żadnych dań w tej restauracji</div>
     {% endif %}
-    <div>
-        <a href="{% url 'order:details' order.id %}" class="btn btn-primary" >Wstecz</a>
-    </div>
+    <p>
+        <a href="{% url 'order:details' order.id %}" class="btn btn-info" >Wstecz</a>
+    </p>
 {% endblock %}

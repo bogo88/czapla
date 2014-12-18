@@ -20,12 +20,13 @@
                         <option value={{h}}> {{h}}</option>
                     {% endfor %}
                 </select>
+
                 <select name="minutes" required="">
                     <option value=''>--</option>
                     <option value='00'>00</option>
-                    {% for m in minutes %}
-                        <option value={{m}}> {{m}}</option>
-                    {% endfor %}
+                    <option value='15'>15</option>
+                    <option value='30'>30</option>
+                    <option value='45'>45</option>
                 </select>
         </p>
         <h3>Wybierz restaurację</h3>
@@ -33,13 +34,12 @@
         {% for restaurant in restaurants %}
             <p class="list-group-item restaurant"><input type="radio" value="{{restaurant.id}}" id="{{restaurant.id}}" name="restaurant" required=""/><label for="{{restaurant.id}}">{{restaurant}}</label></p>
         {% endfor %}
-
-        <div>
+        </div>
+        <p>
             <input type="submit" class="btn btn-primary" value="Utwórz zamówienie" />
-        </div>
-        </div>
+        </p>
     {% else %}
-        <p>Nie ma jeszcze żadnych restauracji</p>
+        <div class="alert alert-warning" role="alert">Nie ma jeszcze żadnych restauracji</div>
     </form>
     {% endif %}
         <script>
@@ -51,11 +51,11 @@
                 });
 
                 $( '.fa-calendar').on('click',function(){
-
-                    $('.datepicker' ).datepicker({
+                    $('.datepicker').datepicker({
                         showOn: 'focus',
                         showButtonPanel: true,
-                        dateFormat: 'dd-mm-yy'
+                        dateFormat: 'dd-mm-yy',
+                        minDate: 0,
                     });
                     $('.datepicker' ).focus();
                 });

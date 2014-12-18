@@ -13,12 +13,13 @@
         {% endfor %}
         </div>
     {% else %}
-        <p>Nie ma jeszcze zamówień dla tej listy</p>
+        <div class="alert alert-warning" role="alert">Nie ma jeszcze żadnych zamówień dla tej listy</div>
     {% endif %}
+    <p>
+        <a href="{% url 'meal:select' order.id %}" class="btn btn-primary">Dopisz się</i></a>
+    </p>
 
-    <a href="{% url 'meal:select' order.id %}" class="btn btn-primary">Dopisz się <i class="fa fa-sign-in"></i></a>
-
-    <div>
-        <a href="{% url 'group:details' order.group.id %}" class="btn btn-primary" >Wstecz</a>
-    </div>
+    <p>
+        <a href="{% url 'group:details' order.group.id %}" class="btn btn-info" >Wstecz</a>
+    </p>
 {% endblock %}

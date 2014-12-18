@@ -6,9 +6,9 @@
   <p>Zamawisz coś? Daj znać - inni też zamawiają!</p>
   <p>
   {% if user.is_authenticated %}
-    <a href="{% url 'profile:index' %}" class="btn btn-primary btn-lg" role="button">Zamów obiad <i class="fa fa-sign-in"></i></a>
+    <p><a href="{% url 'profile:index' %}" class="btn btn-success btn-lg" role="button">Zamów obiad <i class="fa fa-cutlery"></i></a></p>
   {% else %}
-    <a href="{% url 'profile:index' %}" class="btn btn-primary btn-lg" role="button">Zaloguj się<i class="fa fa-sign-in"></i></a>
+    <p><a href="{% url 'profile:index' %}" class="btn btn-primary btn-lg" role="button">Zaloguj się <i class="fa fa-sign-in"></i></a></p>
   {% endif %}
   </p>
 </div>

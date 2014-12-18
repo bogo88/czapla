@@ -18,11 +18,9 @@ def restaurant(request, group_id):
         else:
             restaurants = Restaurant.objects.all()
             hours = range(1, 24)
-            minutes = range(1, 60)
             return render(request, 'meal/restaurant.html', {'restaurants': restaurants.all(),
                                                             'group_id': group_id,
                                                             'hours': hours,
-                                                            'minutes': minutes
                                                             })
 
 
